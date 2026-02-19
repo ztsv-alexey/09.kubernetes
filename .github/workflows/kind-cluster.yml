@@ -1,0 +1,25 @@
+name: KinD Cluster Setup
+
+on:
+  push:
+    branches:
+      - 09.Kubernetes
+
+jobs:
+  kind-cluster:
+    runs-on: ubuntu-22.04
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup KinD cluster
+        run: |
+          curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.27.0/kind-linux-amd64
+          chmod +x ./kind && sudo mv ./kind /usr/local/bin/
+          kind create cluster --name test-cluster
+
+      - name: Cluster info
+        run: |
+          kubectl version
+          kubectl get nodes
