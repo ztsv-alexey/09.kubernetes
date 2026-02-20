@@ -1,0 +1,25 @@
+name: Minikube Cluster Setup
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  minikube-cluster:
+    runs-on: ubuntu-22.04
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Minikube cluster
+        run: |
+          curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+          sudo install minikube-linux-amd64 /usr/local/bin/minikube
+          minikube start --driver=docker
+
+      - name: Cluster info
+        run: |
+          kubectl version
+          kubectl get nodes
