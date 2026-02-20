@@ -3,7 +3,7 @@ name: KinD Cluster Setup
 on:
   push:
     branches:
-      - 09.Kubernetes
+      - main
 
 jobs:
   kind-cluster:
